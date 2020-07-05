@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const { execSync } = require("child_process");
+
+let output = "";
+const commandOutput = execSync("amixer get Capture");
+const regex = /\[(on|off)\]/;
+
+output += regex.exec(commandOutput)[1];
+
+process.stdout.write(output.toUpperCase());

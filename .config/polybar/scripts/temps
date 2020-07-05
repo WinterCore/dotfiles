@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+const { execSync } = require("child_process");
+
+const gpu = execSync("sensors | grep junction");
+const cpu = execSync("sensors | grep Tctl");
+
+const regex = /\s\+(\d{2,3}\.\d+.C)\s/;
+
+let output = "";
+const gpuData = regex.exec(gpu.toString());
+const cpuData = regex.exec(cpu.toString());
+if (cpuData)
+    output += `CPU ${cpuData[1]}`;
+output += " / ";
+if (gpuData)
+    output += `GPU ${gpuData[1]}`;
+
+process.stdout.write(output);

@@ -1,0 +1,12 @@
+/** Configured For Applets **/
+
+configuration {
+  show-icons : true;
+  icon-theme : "Papirus";
+  theme      : "~/.config/rofi/themes/custom.rasi";
+  location   : 2;
+  yoffset    : 300;
+  xoffset    : 0;
+  width      : 30;
+  lines      : 10;
+}
