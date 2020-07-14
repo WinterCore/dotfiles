@@ -216,7 +216,7 @@ exec_always --no-startup-id "killall -q picom; picom"
 exec_always --no-startup-id "dunst"
 
 # Enable background
-exec_always --no-startup-id "feh --bg-fill ~/Pictures/anime-irl-2D-Russia-1715417-wallhere.com.jpg"
+exec_always --no-startup-id "feh --bg-fill ~/Pictures/leaves_green_dark_145996.jpg"
 
 # Video wallpaper (requires xwinwrap and mplayer). It is executed twice because I have a 2 monitor setup
 # exec_always "xwinwrap -ov -ni -g 1920x1080+1920+0 -- mplayer -wid WID -quiet ~/Pictures/bg.mp4 -loop 0"
@@ -229,7 +229,7 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 
 # Bind language switching keys
-bindsym $mod+Ctrl+Shift+Arabic_1 exec setxkbmap -model pc104 -layout us
+bindsym $mod+Ctrl+Shift+Arabic_1 exec setxkbmap -model pc104 -layout us && xmodmap ~/.config/swap_caps_with_escape
 bindsym $mod+Ctrl+Shift+2 exec setxkbmap -model pc104 -layout ara -variant qwerty_digits
 
 # Media & Volume
@@ -268,7 +268,8 @@ gaps inner 10
 gaps outer 5
 
 #client.focused          #FF0000 #CC0B67 #80FFF9 #CC0B67
-client.focused          #FF0000 #AD7B6D #80FFF9 #AD7B6D
+client.focused          #515BA2 #515BA2 #00ff00 #515BA2
+client.unfocused          #515BA2 #3C3C3C #00ff00 #3C3C3C
 
 client.background       #000000
 

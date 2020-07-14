@@ -18,11 +18,16 @@
 
 [colors]
 
-background = #1F1616
+background = #0F191A
 color1 = #AD7B6D
 color2 = #C58365
 color3 = #907C72
-
+color4 = #7bF7CD
+color5 = #F9F871
+color6 = #E27878
+color7 = #bEFbFF
+color8 = #00C59D
+white  = #FFFFFF
 ;  _
 ; | |__   __ _ _ __ ___
 ; | '_ \ / _` | '__/ __|
@@ -34,7 +39,8 @@ font-0=SF Mono:size=10:antialias=true;3
 font-1=FontAwesome5Free:style=Regular:size=10:antialias=true;2
 font-2=FontAwesome5Free:style=Solid:size=10:antialias=true;2
 font-3=IPAGothic:style=Regular:size=10:antialias=true;3
-height = 30
+font-4=EPSON 太明朝体Ｂ:style=Regular:size=10:antialias=true;3
+height = 35
 ;radius = 20
 ;Works very well with a ;radius like this! Put it on every bar.
 
@@ -42,7 +48,7 @@ background = ${colors.background}
 width = 100%
 
 modules-left = i3 xwindow
-modules-right = microphone temps github cpu memory pulseaudio time power
+modules-right = github temps cpu memory pulseaudio time power
 tray-position = right
 
 wm-restack = i3
@@ -123,10 +129,8 @@ type = internal/cpu
 interval = 2
 label = %percentage:2%%
 format-prefix = " "
-format-background = ${colors.background}
-format-foreground = ${colors.color1}
 format-padding = 2
-
+format-foreground = ${colors.color4}
 
 [module/memory]
 type = internal/memory
@@ -134,8 +138,7 @@ interval = 2
 format-padding = 2
 contet-font = 2
 format-prefix = "  "
-format-background = ${colors.background}
-format-foreground = ${colors.color1}
+format-foreground = ${colors.color6}
 label = %gb_used%/%gb_total%
 
 [module/microphone]
@@ -170,8 +173,7 @@ format-foreground = ${colors.background}
 type = custom/script
 exec = "$HOME/.config/polybar/scripts/temps"
 format-prefix = " "
-format-background = ${colors.background}
-format-foreground = ${colors.color1}
+format-foreground = ${colors.color5}
 format-padding = 2
 
 [module/nop]
@@ -194,23 +196,35 @@ format-padding = 2
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:50:...%
-label-foreground = ${colors.color1}
+label-foreground = ${colors.color4}
 label-background = ${colors.background}
 label-padding = 2
 
 [module/i3]
+
+ws-icon-0 = 1;一
+ws-icon-1 = 2;二
+ws-icon-2 = 3;三
+ws-icon-3 = 4;四
+ws-icon-4 = 5;五
+ws-icon-5 = 6;六
+ws-icon-6 = 7;七
+ws-icon-7 = 8;八
+ws-icon-8 = 9;九
+ws-icon-9 = 10;十
+
+format-font = 4
 type = internal/i3
 format = <label-state>
 format-padding = 2
-format-background = ${colors.color1}
-format-foreground = ${colors.background}
+format-foreground = ${colors.color6}
 index-sort = true
 wrapping-scroll = false
 
-label-focused = "|%index%|"
-label-visible = " %index% "
-label-unfocused = " %index% "
-label-urgent = " (%index%) "
+label-focused = "|%icon%|"
+label-visible = " %icon% "
+label-unfocused = " %icon% "
+label-urgent = " (%icon%) "
 
 enable-click = true
 reverse-scroll = false
@@ -224,7 +238,7 @@ reverse-scroll = false
 [module/power]
 type = custom/text
 content = 
-content-foreground = ${colors.color3}
+content-foreground = ${colors.color8}
 click-left = "~/.config/rofi/scripts/powermenu.sh"
 content-padding = 2
 
@@ -273,8 +287,7 @@ time = "%I:%M %p"
 date = "%d %b"
 
 label = %date%, %time%
-label-foreground = ${colors.color3}
-label-background = ${colors.background}
+label-foreground = ${colors.white}
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -282,8 +295,7 @@ type = internal/pulseaudio
 format-volume-padding = 2
 format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage:3:3%%
-format-volume-background = ${colors.color3}
-format-volume-foreground = ${colors.background}
+format-volume-foreground = ${colors.color7}
 use-ui-max = false
 interval = 5
 

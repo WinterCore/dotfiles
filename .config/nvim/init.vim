@@ -4,9 +4,6 @@
 " Includes
     so ~/.config/nvim/plugins.vim
 
-" Font
-    set guifont=Operator\ Mono\ Book\ Regular
-
 " Tabs
     set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
     autocmd Filetype snippets setlocal autoindent noexpandtab tabstop=4 shiftwidth=4
@@ -21,9 +18,20 @@
     autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NON
     colorscheme onedark
     let g:onedark_color_overrides = {
-        \    "comment_grey": {"gui": "#999999", "cterm": "245", "cterm16": "20"},
+        \    "comment_grey": {"gui": "#999999", "cterm": "10", "cterm16": "20"},
         \    "gutter_fg_grey": {"gui": "#999999", "cterm": "109", "cterm16": "20"}
         \}
+
+" Italic comments
+    set t_ZH=^[[3m
+    set t_ZR=^[[23m
+    highlight Comment cterm=italic gui=italic
+
+" Buffers
+    nnoremap <leader>b :ls<CR>:b<Space>
+
+" Netrw
+    let g:netrw_fastbrowse = 0
 
 " onedark.vim override: Don't set a background color when running in a terminal;
 " just use the terminal's background color
@@ -48,9 +56,6 @@ endif
     tmap <C-l> <C-w>l
     tnoremap <Esc> <C-\><C-n>
     autocmd BufWinEnter * setlocal modifiable
-
-" Goyo
-    map <leader>n :Goyo \| set linebreak<CR>
 
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults
     set splitbelow splitright
@@ -124,6 +129,13 @@ let g:haskell_backpack = 1                " to enable highlighting of backpack k
         nmap <leader>lfr :CtrlP<cr>app/Http/Resources
         nmap <leader>lr :e routes<cr>
 
+
+" Rails specific
+    nmap <leader>rc :e app/controllers<cr>
+    nmap <leader>rm :e app/models<cr>
+    nmap <leader>rv :e app/views<cr>
+    nmap <leader>rr :e config/routes.rb<cr>
+    nmap <leader>rs :e config<cr>
 
 set backspace=indent,eol,start
 

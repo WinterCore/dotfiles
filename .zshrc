@@ -100,14 +100,21 @@ alias cpuinfo="cat /proc/cpuinfo | grep MHz"
 alias powerset-ps="sudo cpupower frequency-set -g powersave"
 alias powerset-p="sudo cpupower frequency-set -g performance"
 alias powerset-c="sudo cpupower frequency-set -g conservative"
+alias powerset-u="sudo cpupower frequency-set -f 2.8GHz"
 alias nvimrc="nvim ~/.config/nvim/init.vim"
 alias i3rc="nvim ~/.config/i3/config"
 alias polyrc="nvim ~/.config/polybar/config"
 alias vim="nvim"
+alias vimrc="nvim ~/.config/nvim/init.vim"
 alias ghci="ghci +RTS -K2M -RTS"
 alias sql="mysql -u root -proot"
+alias gcn="git clone"
+alias gp="git pull"
+alias gm="git commit"
 
-export QT_QPA_PLATFORMTHEME=qt5ct
+
+export TERM="xterm-256color"
+
 export PATH=~/.local/bin:$PATH
 export PATH=~/.scripts:$PATH
 export PATH=~/.npm-global/bin:$PATH
