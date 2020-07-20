@@ -3,6 +3,9 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/winter/.oh-my-zsh"
+
+# PURE_PROMPT_SYMBOL="λ >"
+
 fpath+=$HOME/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure

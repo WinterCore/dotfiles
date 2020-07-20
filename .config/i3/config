@@ -26,9 +26,6 @@ font pango:DejaVu Sans Mono 8
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -221,8 +218,6 @@ exec_always --no-startup-id "feh --bg-fill ~/Pictures/leaves_green_dark_145996.j
 # Video wallpaper (requires xwinwrap and mplayer). It is executed twice because I have a 2 monitor setup
 # exec_always "xwinwrap -ov -ni -g 1920x1080+1920+0 -- mplayer -wid WID -quiet ~/Pictures/bg.mp4 -loop 0"
 # exec_always "xwinwrap -ov -ni -g 1920x1080 -- mplayer -wid WID -quiet ~/Pictures/bg.mp4 -loop 0"
-
-
 
 # Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh

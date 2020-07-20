@@ -34,24 +34,44 @@ white  = #FFFFFF
 ; | |_) | (_| | |  \__ \
 ; |_.__/ \__,_|_|  |___/
 
-[bar/top]
+[bar/main]
+monitor=${env:MONITOR:}
+font-0=SF Mono:size=10:antialias=true;3
+font-1=FontAwesome5Free:style=Regular:size=10:antialias=true;3
+font-2=FontAwesome5Free:style=Solid:size=10:antialias=true;3
+font-3=IPAGothic:style=Regular:size=10:antialias=true;3
+font-4=EPSON 太明朝体Ｂ:style=Regular:size=10:antialias=true;3
+height = 35
+;radius = 20
+;Works very well with a ;radius like this! Put it on every bar.
+enable-ipc = true
+
+background = ${colors.background}
+width = 100%
+
+modules-left = i3
+modules-right = tea cpuboiling memes pulseaudio time power
+tray-position = right
+
+wm-restack = i3
+
+[bar/second]
+monitor=${env:MONITOR:}
 font-0=SF Mono:size=10:antialias=true;3
 font-1=FontAwesome5Free:style=Regular:size=10:antialias=true;2
 font-2=FontAwesome5Free:style=Solid:size=10:antialias=true;2
 font-3=IPAGothic:style=Regular:size=10:antialias=true;3
 font-4=EPSON 太明朝体Ｂ:style=Regular:size=10:antialias=true;3
 height = 35
+enable-ipc = true
 ;radius = 20
 ;Works very well with a ;radius like this! Put it on every bar.
 
 background = ${colors.background}
 width = 100%
 
-modules-left = i3 xwindow
-modules-right = github temps cpu memory pulseaudio time power
-tray-position = right
-
-wm-restack = i3
+modules-left = mpd
+modules-right = temps cpu memory
 
 [bar/base]
 font-0=SF Mono:size=10:antialias=true;3
@@ -176,6 +196,31 @@ format-prefix = " "
 format-foreground = ${colors.color5}
 format-padding = 2
 
+[module/memes]
+type = custom/ipc
+hook-0 = "$HOME/.config/polybar/scripts/rng 30 70 GB"
+initial = 1
+format-prefix = " Memes folder: "
+format-foreground = ${colors.color5}
+format-padding = 2
+
+[module/cpuboiling]
+type = custom/script
+exec = "$HOME/.config/polybar/scripts/rng 120 160 °C"
+format-prefix = " CPU: "
+format-foreground = ${colors.color4}
+format-padding = 2
+interval = 3
+
+[module/tea]
+type = custom/ipc
+hook-0 = "$HOME/.config/polybar/scripts/rng -40 0 °C"
+initial = 1
+format-prefix = " TEA: "
+format-foreground = ${colors.color6}
+format-padding = 2
+interval = 5
+
 [module/nop]
 type = custom/script
 format-prefix = ""
@@ -246,16 +291,17 @@ content-padding = 2
 type = internal/mpd
 host = 127.0.0.1
 port = 6600
-format-online =  <icon-prev> <toggle> <icon-next>  <label-song><label-time>
-fomat-online-padding = 2
-format-online-background = ${colors.color2}
-format-online-foreground = ${colors.background}
-label-song-foreground = ${colors.color2}
+label-song = "%title%"
+format-online = " <label-song><label-time>"
+format-online-padding = 2
+format-online-foreground = ${colors.white}
+format-online-background = ${colors.background}
+label-song-foreground = ${colors.white}
 label-song-background = ${colors.background}
-label-song-padding = 2
-label-time-foreground = ${colors.color2}
+label-song-padding = 1
+label-time-foreground = ${colors.white}
 label-time-background = ${colors.background}
-label-time-padding = 1
+label-time-padding = 0
 
 format-offline = <label-offline>
 label-offline =  offline
@@ -274,7 +320,7 @@ icon-play = 
 icon-pause = 
 icon-next = 
 
-label-song-maxlen = 38
+label-song-maxlen = 45
 label-song-ellipsis = true
 
 [module/time]

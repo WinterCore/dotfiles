@@ -67,18 +67,18 @@
 
 # Set the background and foreground (text) color for all notifications
 [urgency_low]
-background = "#1F1616"
-foreground = "#CDB0A2"
+background = "#0F191A"
+foreground = "#FAFAFA"
 timeout = 5
 
 [urgency_normal]
-background = "#1F1616"
-foreground = "#CDB0A2"
+background = "#0F191A"
+foreground = "#FAFAFA"
 timeout = 5
 
 [urgency_critical]
-background = "#1F1616"
-foreground = "#CDB0A2"
+background = "#0F191A"
+foreground = "#FAFAFA"
 timeout = 0
 # vim:ft=cfg
 

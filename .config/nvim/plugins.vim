@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/goyo.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 Plug 'joshdick/onedark.vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'jreybert/vimagit'
