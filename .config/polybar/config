@@ -352,8 +352,7 @@ ramp-volume-2 = ""
 
 
 label-muted = "     "
-label-muted-background = ${colors.color3}
-label-muted-foreground = ${colors.background}
+label-muted-foreground = ${colors.color7}
 label-muted-padding = 2
 
 ;Spotify modules

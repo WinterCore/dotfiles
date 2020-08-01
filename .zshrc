@@ -114,13 +114,15 @@ alias sql="mysql -u root -proot"
 alias gcn="git clone"
 alias gp="git pull"
 alias gm="git commit"
+alias java8="/usr/lib/jvm/java-8-openjdk/jre/bin/java"
+alias rc="roficlip"
 
+eval $(thefuck --alias)
 
 export TERM="xterm-256color"
 
 export PATH=~/.local/bin:$PATH
 export PATH=~/.scripts:$PATH
 export PATH=~/.npm-global/bin:$PATH
-export PATH=~/.gem/ruby/2.7.0/bin:$PATH
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"

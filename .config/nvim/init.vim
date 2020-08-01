@@ -136,6 +136,7 @@ let g:haskell_backpack = 1                " to enable highlighting of backpack k
     nmap <leader>rv :e app/views<cr>
     nmap <leader>rr :e config/routes.rb<cr>
     nmap <leader>rs :e config<cr>
+    nmap <leader>rp :e spec<cr>
 
 set backspace=indent,eol,start
 

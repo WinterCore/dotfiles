@@ -47,6 +47,7 @@ bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Shift+d exec --no-startup-id rofi -show run
 bindsym $mod+comma exec --no-startup-id rofi -show emoji
+bindsym $mod+period exec --no-startup-id roficlip
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -132,6 +133,11 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# Others
+  # Lorem ipsum
+    bindsym $mod+Ctrl+Shift+3 exec xdotool type "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -206,6 +212,9 @@ set $transparent #00000000
 #	}
 #       status_command i3blocks
 #}
+
+# Run clipboard manager
+exec_always --no-startup-id "clipster -d"
 
 # Run compositor
 exec_always --no-startup-id "killall -q picom; picom"
