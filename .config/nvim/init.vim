@@ -7,6 +7,8 @@
 " Tabs
     set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
     autocmd Filetype snippets setlocal autoindent noexpandtab tabstop=4 shiftwidth=4
+    autocmd Filetype scss set tabstop=8 expandtab shiftwidth=2 smarttab
+    autocmd Filetype css set tabstop=8 expandtab shiftwidth=2 smarttab
 
 " Basics
     set number relativenumber
@@ -69,9 +71,9 @@ endif
         nmap <leader>G :sp<cr>
         nmap <leader>g :vsp<cr>
 
-" Copy selected text to system clipboard (requires gvim installed)
-    set clipboard+=unnamedplus
-
+" Clipboard
+    xnoremap <leader>y "+y
+    xnoremap <leader>p "+p
 
 " Random Mappings
     nmap <leader>ev :tabe $MYVIMRC<cr> " Edit .vimrc
@@ -124,15 +126,19 @@ let g:haskell_backpack = 1                " to enable highlighting of backpack k
 " Laravel specific
     nmap <leader>lm :!php artisan make:
     " CtrlP
-        nmap <leader>lfc :CtrlP<cr>app/Http/Controllers
-        nmap <leader>lfm :CtrlP<cr>app/Models
-        nmap <leader>lfr :CtrlP<cr>app/Http/Resources
+        nmap <leader>lc :e app/Http/Controllers<cr>
+        nmap <leader>lm :e app/Models<cr>
+        nmap <leader>lhh :e app/Http/Resources<cr>
+        nmap <leader>lhr :e app/Http/Requests<cr>
+        nmap <leader>ld :e database/migrations<cr>
+        nmap <leader>lf :e database/migrations<cr>
         nmap <leader>lr :e routes<cr>
 
 
 " Rails specific
     nmap <leader>rc :e app/controllers<cr>
     nmap <leader>rm :e app/models<cr>
+    nmap <leader>rd :e db/migrate<cr>
     nmap <leader>rv :e app/views<cr>
     nmap <leader>rr :e config/routes.rb<cr>
     nmap <leader>rs :e config<cr>

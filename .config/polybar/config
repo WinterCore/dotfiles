@@ -198,7 +198,7 @@ format-padding = 2
 
 [module/memes]
 type = custom/ipc
-hook-0 = "$HOME/.config/polybar/scripts/rng 30 70 GB"
+hook-0 = "echo $(rng 70 120) GB"
 initial = 1
 format-prefix = " Memes folder: "
 format-foreground = ${colors.color5}
@@ -206,7 +206,7 @@ format-padding = 2
 
 [module/cpuboiling]
 type = custom/script
-exec = "$HOME/.config/polybar/scripts/rng 120 160 °C"
+exec = "echo $(rng 170 280) °C"
 format-prefix = " CPU: "
 format-foreground = ${colors.color4}
 format-padding = 2
@@ -214,7 +214,7 @@ interval = 3
 
 [module/tea]
 type = custom/ipc
-hook-0 = "$HOME/.config/polybar/scripts/rng -40 0 °C"
+hook-0 = "echo $(rng -40 0) °C"
 initial = 1
 format-prefix = " TEA: "
 format-foreground = ${colors.color6}

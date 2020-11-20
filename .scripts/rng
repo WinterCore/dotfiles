@@ -1,0 +1,5 @@
+#!/bin/bash
+
+number=$(awk -v seed="$RANDOM" -v min="$1" -v max="$2" 'BEGIN { srand(seed); printf("%.2f", rand() * (max - min) + min) }')
+
+echo "$number"

@@ -96,6 +96,7 @@ eval "$(rbenv init -)"
 
 alias usbcam="droidcam-cli 127.0.0.1 4747"
 alias corevpn="sudo openvpn3 -a -c yes ~/coreserver.ovpn"
+alias dellvpn="sudo openvpn3 -a -c yes ~/dell-core.ovpn"
 alias mongoroot="mongo -u root -p root --authenticationDatabase admin"
 alias fontviewer="gucharmap"
 alias music=ncmpcpp
@@ -117,7 +118,7 @@ alias gm="git commit"
 alias java8="/usr/lib/jvm/java-8-openjdk/jre/bin/java"
 alias rc="roficlip"
 
-eval $(thefuck --alias)
+[ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
 
 export TERM="xterm-256color"
 

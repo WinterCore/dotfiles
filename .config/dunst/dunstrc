@@ -19,7 +19,7 @@
     horizontal_padding = 14
 
     # The frame color and width of the notification
-    frame_color = "#1F1616"
+    frame_color = "#0F191A"
     frame_width = 2
     line_height = 0
 
