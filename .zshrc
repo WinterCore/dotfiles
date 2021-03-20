@@ -96,7 +96,6 @@ eval "$(rbenv init -)"
 
 alias usbcam="droidcam-cli 127.0.0.1 4747"
 alias corevpn="sudo openvpn3 -a -c yes ~/coreserver.ovpn"
-alias dellvpn="sudo openvpn3 -a -c yes ~/dell-core.ovpn"
 alias mongoroot="mongo -u root -p root --authenticationDatabase admin"
 alias fontviewer="gucharmap"
 alias music=ncmpcpp

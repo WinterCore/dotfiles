@@ -36,12 +36,13 @@ white  = #FFFFFF
 
 [bar/main]
 monitor=${env:MONITOR:}
-font-0=SF Mono:size=10:antialias=true;3
+font-0=Hack:size=10:antialias=true;3
 font-1=FontAwesome5Free:style=Regular:size=10:antialias=true;3
 font-2=FontAwesome5Free:style=Solid:size=10:antialias=true;3
 font-3=IPAGothic:style=Regular:size=10:antialias=true;3
 font-4=EPSON 太明朝体Ｂ:style=Regular:size=10:antialias=true;3
-height = 35
+bottom=true
+height = 34
 ;radius = 20
 ;Works very well with a ;radius like this! Put it on every bar.
 enable-ipc = true
@@ -49,8 +50,8 @@ enable-ipc = true
 background = ${colors.background}
 width = 100%
 
-modules-left = i3
-modules-right = tea cpuboiling memes pulseaudio time power
+modules-left = i3 mpd
+modules-right = cpu memory pulseaudio time
 tray-position = right
 
 wm-restack = i3
@@ -156,10 +157,9 @@ format-foreground = ${colors.color4}
 type = internal/memory
 interval = 2
 format-padding = 2
-contet-font = 2
+content-font = 2
 format-prefix = "  "
 format-foreground = ${colors.color6}
-label = %gb_used%/%gb_total%
 
 [module/microphone]
 type = custom/script
@@ -202,14 +202,14 @@ hook-0 = "echo $(rng 70 120) GB"
 initial = 1
 format-prefix = " Memes folder: "
 format-foreground = ${colors.color5}
-format-padding = 2
+format-padding = 1
 
 [module/cpuboiling]
 type = custom/script
 exec = "echo $(rng 170 280) °C"
 format-prefix = " CPU: "
 format-foreground = ${colors.color4}
-format-padding = 2
+format-padding = 1
 interval = 3
 
 [module/tea]
@@ -218,7 +218,7 @@ hook-0 = "echo $(rng -40 0) °C"
 initial = 1
 format-prefix = " TEA: "
 format-foreground = ${colors.color6}
-format-padding = 2
+format-padding = 1
 interval = 5
 
 [module/nop]
@@ -304,7 +304,7 @@ label-time-background = ${colors.background}
 label-time-padding = 0
 
 format-offline = <label-offline>
-label-offline =  offline
+label-offline =  mpd is offline
 format-offline-padding = 2
 format-offline-foreground = ${colors.color2}
 format-offline-background = ${colors.background}
@@ -338,7 +338,7 @@ label-foreground = ${colors.white}
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume-padding = 2
+format-volume-padding = 1
 format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage:3:3%%
 format-volume-foreground = ${colors.color7}
@@ -353,7 +353,7 @@ ramp-volume-2 = ""
 
 label-muted = "     "
 label-muted-foreground = ${colors.color7}
-label-muted-padding = 2
+label-muted-padding = 1
 
 ;Spotify modules
 

@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/home/winter/.config/nvim'
+let g:netrw_dirhist_8='/home/winter/src/polar-app/packages/polar-bookshelf/web/js/annotation_sidebar'
+let g:netrw_dirhist_7='/home/winter/src/polar-app/packages/polar-bookshelf'
+let g:netrw_dirhist_6='/home/winter/src/polar-app/packages/polar-bookshelf/web/js/mui'
+let g:netrw_dirhist_5='/home/winter/src/polar-app/packages/polar-bookshelf'
+let g:netrw_dirhist_4='/home/winter/src/polar-app/packages/polar-bookshelf/apps/doc/src/outline'
+let g:netrw_dirhist_3='/home/winter/src/polar-app/packages/polar-bookshelf/apps/doc/src'
+let g:netrw_dirhist_2='/home/winter/src/polar-app/packages/polar-bookshelf/apps/doc/src/text_highlighter'
+let g:netrw_dirhist_1='/home/winter/src/polar-app/packages/polar-bookshelf/apps/doc/src'
+let g:netrw_dirhist_0='/home/winter/src/polar-app/packages/polar-bookshelf/apps/doc/src/toolbar'

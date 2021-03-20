@@ -7,8 +7,8 @@
 " Tabs
     set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
     autocmd Filetype snippets setlocal autoindent noexpandtab tabstop=4 shiftwidth=4
-    autocmd Filetype scss set tabstop=8 expandtab shiftwidth=2 smarttab
-    autocmd Filetype css set tabstop=8 expandtab shiftwidth=2 smarttab
+    " autocmd Filetype scss set tabstop=8 expandtab shiftwidth=2 smarttab
+    " autocmd Filetype css set tabstop=8 expandtab shiftwidth=2 smarttab
 
 " Basics
     set number relativenumber
@@ -24,32 +24,20 @@
         \    "gutter_fg_grey": {"gui": "#999999", "cterm": "109", "cterm16": "20"}
         \}
 
-" Italic comments
-    set t_ZH=^[[3m
-    set t_ZR=^[[23m
-    highlight Comment cterm=italic gui=italic
-
 " Buffers
     nnoremap <leader>b :ls<CR>:b<Space>
+
+" Run shortcuts
+    noremap <space>rd :!deno run -A %<cr>
 
 " Netrw
     let g:netrw_fastbrowse = 0
 
-" onedark.vim override: Don't set a background color when running in a terminal;
-" just use the terminal's background color
-" `gui` is the hex color code used in GUI mode/nvim true-color mode
-" `cterm` is the color code used in 256-color mode
-" `cterm16` is the color code used in 16-color mode
-if (has("autocmd") && !has("gui_running"))
-  augroup colorset
-    autocmd!
-    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
-    let s:dark_grey = { "gui": "#585858", "cterm": "240", "cterm16" : "7" }
-    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
-    autocmd ColorScheme * call onedark#set_highlight("Visual", { "bg": s:dark_grey }) " `bg` will not be styled since there is no `bg` setting
-  augroup END
-endif
+    set wildmenu
 
+" Clipboard
+    noremap <leader>y "+y
+    noremap <leader>p "+p
 
 " Terminal mode
     tmap <C-h> <C-w>h
@@ -71,14 +59,6 @@ endif
         nmap <leader>G :sp<cr>
         nmap <leader>g :vsp<cr>
 
-" Clipboard
-    xnoremap <leader>y "+y
-    xnoremap <leader>p "+p
-
-" Random Mappings
-    nmap <leader>ev :tabe $MYVIMRC<cr> " Edit .vimrc
-    nmap <leader>sr :Gsearch<cr>
-
 " Ack
     set grepprg=ack
     let g:grep_cmd_opts = '--noheading'
@@ -92,12 +72,6 @@ endif
 " Fuzzy Finder
     let g:ctrlp_custom_ignore = '*/node_modules/*|git'
     let g:ctrlp_lazy_update = 1
-
-" Remove unnecessary white space characters on save
-    autocmd BufWritePre * %s/\s\+$//e
-
-" ctags
-    nmap <leader>f :tag<space>
 
 " Remove highlight
     nmap <leader>nh :noh<cr>
@@ -123,29 +97,7 @@ let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
-" Laravel specific
-    nmap <leader>lm :!php artisan make:
-    " CtrlP
-        nmap <leader>lc :e app/Http/Controllers<cr>
-        nmap <leader>lm :e app/Models<cr>
-        nmap <leader>lhh :e app/Http/Resources<cr>
-        nmap <leader>lhr :e app/Http/Requests<cr>
-        nmap <leader>ld :e database/migrations<cr>
-        nmap <leader>lf :e database/migrations<cr>
-        nmap <leader>lr :e routes<cr>
-
-
-" Rails specific
-    nmap <leader>rc :e app/controllers<cr>
-    nmap <leader>rm :e app/models<cr>
-    nmap <leader>rd :e db/migrate<cr>
-    nmap <leader>rv :e app/views<cr>
-    nmap <leader>rr :e config/routes.rb<cr>
-    nmap <leader>rs :e config<cr>
-    nmap <leader>rp :e spec<cr>
-
 set backspace=indent,eol,start
-
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -159,7 +111,7 @@ set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=300
+set updatetime=500
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -264,6 +216,15 @@ omap ac <Plug>(coc-classobj-a)
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
 
@@ -282,18 +243,19 @@ cmap w!! w !sudo tee > /dev/null %
 
 " Mappings using CoCList:
 " Show all diagnostics.
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>ca  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <space>ce  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <space>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <space>co  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>cs  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent> <space>cj  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
+
