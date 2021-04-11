@@ -10,6 +10,10 @@
     " autocmd Filetype scss set tabstop=8 expandtab shiftwidth=2 smarttab
     " autocmd Filetype css set tabstop=8 expandtab shiftwidth=2 smarttab
 
+
+let g:snipMate = { 'snippet_version' : 1 }
+
+
 " Basics
     set number relativenumber
     set wildmode=longest,list,full
@@ -40,10 +44,10 @@
     noremap <leader>p "+p
 
 " Terminal mode
-    tmap <C-h> <C-w>h
-    tmap <C-j> <C-w>j
-    tmap <C-k> <C-w>k
-    tmap <C-l> <C-w>l
+    " tmap <C-h> <C-w>h
+    " tmap <C-j> <C-w>j
+    " tmap <C-k> <C-w>k
+    " tmap <C-l> <C-w>l
     tnoremap <Esc> <C-\><C-n>
     autocmd BufWinEnter * setlocal modifiable
 
@@ -72,6 +76,7 @@
 " Fuzzy Finder
     let g:ctrlp_custom_ignore = '*/node_modules/*|git'
     let g:ctrlp_lazy_update = 1
+    let g:ctrlp_map = '<F10>'
 
 " Remove highlight
     nmap <leader>nh :noh<cr>
@@ -111,7 +116,7 @@ set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=500
+set updatetime=300
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -160,6 +165,8 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+nmap <leader>h :Ag<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -259,3 +266,58 @@ nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
 
+
+
+" FZF
+
+nmap <C-p> :Files<cr>
+
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - Popup window
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+" let g:fzf_layout = { 'down': '40%' }
+" let g:fzf_layout = { 'window': 'enew' }
+" let g:fzf_layout = { 'window': '-tabnew' }
+" let g:fzf_layout = { 'window': '10new' }
+
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'

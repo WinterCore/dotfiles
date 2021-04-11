@@ -4,6 +4,7 @@ Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 Plug 'joshdick/onedark.vim'
 Plug 'tpope/vim-rhubarb'
 " Plug 'pangloss/vim-javascript'
+Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'vimwiki/vimwiki'
