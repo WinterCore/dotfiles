@@ -16,7 +16,8 @@
 | Editor | neovim |
 | Sound Server | pulseaudio |
 | Music Player | mpd |
-| Browser | firefox |
+| Browser | chrome |
+| Clipboard | clipster & roficlip |
 
 
 ![Screenshot](screenshot_new.png)

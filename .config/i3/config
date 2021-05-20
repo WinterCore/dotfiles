@@ -24,7 +24,7 @@ font pango:DejaVu Sans Mono 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 
 # Use pactl to adjust volume in PulseAudio.
@@ -33,6 +33,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -48,6 +50,7 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Shift+d exec --no-startup-id rofi -show run
 bindsym $mod+comma exec --no-startup-id rofi -show emoji
 bindsym $mod+period exec --no-startup-id roficlip
+bindsym $mod+e exec --no-startup-id thunar ~
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -133,11 +136,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# Others
-  # Lorem ipsum
-    bindsym $mod+Ctrl+Shift+3 exec xdotool type "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-
-
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -222,7 +220,7 @@ exec_always --no-startup-id "killall -q picom; picom"
 exec_always --no-startup-id "dunst"
 
 # Enable background
-exec_always --no-startup-id "feh --bg-fill ~/Pictures/leaves_green_dark_145996.jpg"
+exec_always --no-startup-id "feh --bg-fill ~/Pictures/wallhaven-nm71kn.jpg"
 
 # Video wallpaper (requires xwinwrap and mplayer). It is executed twice because I have a 2 monitor setup
 # exec_always "xwinwrap -ov -ni -g 1920x1080+1920+0 -- mplayer -wid WID -quiet ~/Pictures/bg.mp4 -loop 0"
@@ -267,6 +265,7 @@ for_window [class="feh"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="floating"] floating enable
 for_window [class="Alacritty" instance="floating"] floating enable
+for_window [class="Thunar"] floating enable
 
 gaps inner 10
 gaps outer 5
@@ -279,3 +278,4 @@ client.background       #000000
 
 # i3lock
 bindsym $mod+Shift+x exec i3lock -c 000000
+bindsym Print exec deepin-screen-recorder
