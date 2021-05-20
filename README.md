@@ -1,4 +1,4 @@
-# My Arch Linux Dotfiles
+# My Arch Linux Dotfiles (Matebook 14)
 
 ### This repository is mainly used as a backup.
 
