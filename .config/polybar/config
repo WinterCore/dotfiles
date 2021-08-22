@@ -35,14 +35,12 @@ white  = #FFFFFF
 ; |_.__/ \__,_|_|  |___/
 
 [bar/main]
-monitor=${env:MONITOR:}
-font-0=Hack:size=10:antialias=true;3
-font-1=FontAwesome5Free:style=Regular:size=10:antialias=true;3
-font-2=FontAwesome5Free:style=Solid:size=10:antialias=true;3
-font-3=IPAGothic:style=Regular:size=10:antialias=true;3
-font-4=EPSON 太明朝体Ｂ:style=Regular:size=10:antialias=true;3
-bottom=true
-height = 34
+font-0=Hack:size=12:antialias=true;3
+font-1=FontAwesome5Free:style=Regular:size=12:antialias=true;3
+font-2=FontAwesome5Free:style=Solid:size=12:antialias=true;3
+font-3=IPAGothic:style=Regular:size=12:antialias=true;3
+font-4=EPSON 太明朝体Ｂ:style=Regular:size=12:antialias=true;3
+height = 40
 ;radius = 20
 ;Works very well with a ;radius like this! Put it on every bar.
 enable-ipc = true
@@ -51,7 +49,7 @@ background = ${colors.background}
 width = 100%
 
 modules-left = i3 mpd
-modules-right = cpu memory pulseaudio time
+modules-right = temps cpu memory pulseaudio battery backlight time
 tray-position = right
 
 wm-restack = i3
@@ -155,7 +153,7 @@ format-foreground = ${colors.color4}
 
 [module/memory]
 type = internal/memory
-interval = 2
+interval = 5
 format-padding = 2
 content-font = 2
 format-prefix = "  "
@@ -244,6 +242,41 @@ label = %title:0:50:...%
 label-foreground = ${colors.color4}
 label-background = ${colors.background}
 label-padding = 2
+
+[module/battery]
+type = internal/battery
+
+full-at = 100
+battery = BAT0
+adapter = ACAD
+poll-interval = 2
+format-discharging-padding = 2
+format-charging-padding = 2
+format-full-padding = 2
+format-discharging = <ramp-capacity> <label-discharging>
+format-charging =   <label-charging>
+format-discharging-foreground = ${colors.color3}
+format-full-foreground = ${colors.color3}
+format-charging-foreground = ${colors.color3}
+format-full =  Full
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/backlight]
+type = internal/backlight
+card = amdgpu_bl0
+enable-scroll = true
+format-padding = 1
+format = <ramp> <label>
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
 
 [module/i3]
 
@@ -399,6 +432,41 @@ format-padding = 2
 tail = true
 interval = 1
 
+[module/network]
+type = internal/network
+interface = wlp1s0
+interval = 2
+format-connected = <ramp-signal> <label-connected>
+format-disconnected = <label-disconnected>
+format-packetloss = <animation-packetloss> <label-connected>
+; Default: %ifname% %local_ip%
+label-connected = %essid%
+label-connected-foreground = #eefafafa
+
+; Default: (none)
+label-disconnected = not connected
+label-disconnected-foreground = #66ffffff
+
+; Default: (none)
+;label-packetloss = %essid%
+;label-packetloss-foreground = #eefafafa
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
+
+; Only applies if <animation-packetloss> is used
+animation-packetloss-0 = ⚠
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 📶
+animation-packetloss-1-foreground = #000000
+; Framerate in milliseconds
+animation-packetloss-framerate = 500
+
 [settings]
 screenchange-reload = true
 ;compositing-background = xor
@@ -412,6 +480,3 @@ margin-top = 0
 margin-bottom = 0
 
 ; vim:ft=dosini
-
-
-r

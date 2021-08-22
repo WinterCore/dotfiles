@@ -7,5 +7,5 @@ killall -q polybar
 while pgrep -x polybar >/dev/null; do sleep1; done
 
 # Launch polybar
-MONITOR=DisplayPort-1 polybar main &
+polybar main &
 # MONITOR=HDMI-A-0 polybar second &
