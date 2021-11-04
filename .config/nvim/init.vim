@@ -5,13 +5,41 @@
     so ~/.config/nvim/plugins.vim
 
 " Tabs
-    set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
-    autocmd Filetype snippets setlocal autoindent noexpandtab tabstop=4 shiftwidth=4
-    " autocmd Filetype scss set tabstop=8 expandtab shiftwidth=2 smarttab
-    " autocmd Filetype css set tabstop=8 expandtab shiftwidth=2 smarttab
+    set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 
-let g:snipMate = { 'snippet_version' : 1 }
+" Coc Snippets
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
 
 
 " Basics
@@ -77,9 +105,6 @@ let g:snipMate = { 'snippet_version' : 1 }
     let g:ctrlp_custom_ignore = '*/node_modules/*|git'
     let g:ctrlp_lazy_update = 1
     let g:ctrlp_map = '<F10>'
-
-" Remove highlight
-    nmap <leader>nh :noh<cr>
 
 " Vim Airline
     let g:airline#extensions#tabline#enabled = 1
@@ -272,11 +297,6 @@ nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
 
 nmap <C-p> :Files<cr>
 
-" This is the default extra key bindings
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
 
 " An action can be a reference to a function that processes selected lines
 function! s:build_quickfix_list(lines)
