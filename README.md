@@ -19,4 +19,4 @@
 | Browser              | chrome (firefox is so buggy) |
 
 
-![Screenshot](screenshot_new.png)
+![Screenshot](screenshot.png)
