@@ -2,19 +2,18 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/winter/.oh-my-zsh"
-
-# PURE_PROMPT_SYMBOL="λ >"
-
-fpath+=$HOME/.zsh/pure
-autoload -U promptinit; promptinit
-prompt pure
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME=""
+
+fpath+=$HOME/.zsh/pure
+
+autoload -U promptinit; promptinit
+prompt pure
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -29,17 +28,16 @@ ZSH_THEME=""
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -51,6 +49,9 @@ ZSH_THEME=""
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -89,40 +90,19 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
-  export EDITOR='nvim'
 fi
 
-eval "$(rbenv init -)"
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-alias usbcam="droidcam-cli 127.0.0.1 4747"
-alias corevpn="sudo openvpn3 -a -c yes ~/coreserver.ovpn"
-alias mongoroot="mongo -u root -p root --authenticationDatabase admin"
-alias fontviewer="gucharmap"
-alias music=ncmpcpp
-alias cpuinfo="cat /proc/cpuinfo | grep MHz"
-alias powerset-ps="sudo cpupower frequency-set -g powersave"
-alias powerset-p="sudo cpupower frequency-set -g performance"
-alias powerset-c="sudo cpupower frequency-set -g conservative"
-alias powerset-u="sudo cpupower frequency-set -f 2.8GHz"
-alias nvimrc="nvim ~/.config/nvim/init.vim"
-alias i3rc="nvim ~/.config/i3/config"
-alias polyrc="nvim ~/.config/polybar/config"
-alias vim="nvim"
-alias vimrc="nvim ~/.config/nvim/init.vim"
-alias ghci="ghci +RTS -K2M -RTS"
-alias sql="mysql -u root -proot"
-alias gcn="git clone"
-alias gp="git pull"
-alias gm="git commit"
-alias java8="/usr/lib/jvm/java-8-openjdk/jre/bin/java"
-alias rc="roficlip"
-
-[ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
-
-export TERM="xterm-256color"
-
-export PATH=~/.local/bin:$PATH
-export PATH=~/.scripts:$PATH
-export PATH=~/.npm-global/bin:$PATH
-[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
-[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+export EDITOR='nvim'
+alias vim=nvim
+source /usr/share/nvm/init-nvm.sh

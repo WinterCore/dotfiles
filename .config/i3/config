@@ -33,6 +33,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -89,7 +91,7 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+s layout stacking
 #bindsym $mod+w layout tabbed
-#bindsym $mod+e layout toggle split
+bindsym $mod+e exec thunar
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -217,12 +219,12 @@ set $transparent #00000000
 exec_always --no-startup-id "clipster -d"
 
 # Run compositor
-exec_always --no-startup-id "killall -q picom; picom"
+exec_always --no-startup-id "picom"
 # Run notification server
 exec_always --no-startup-id "dunst"
 
 # Enable background
-exec_always --no-startup-id "feh --bg-fill ~/Pictures/leaves_green_dark_145996.jpg"
+exec_always --no-startup-id "feh --bg-fill ~/Pictures/wp.jpg"
 
 # Video wallpaper (requires xwinwrap and mplayer). It is executed twice because I have a 2 monitor setup
 # exec_always "xwinwrap -ov -ni -g 1920x1080+1920+0 -- mplayer -wid WID -quiet ~/Pictures/bg.mp4 -loop 0"
@@ -242,9 +244,9 @@ bindsym $mod+Ctrl+Shift+2 exec setxkbmap -model pc104 -layout ara -variant qwert
     bindsym $mod+bracketleft exec pulsemixer --change-volume -5
 
     # Media keys ("playerctl" is required)
-    # bindsym $mod+Ctrl+Shift+k exec playerctl play-pause
-    # bindsym $mod+Ctrl+Shift+l exec playerctl next
-    # bindsym $mod+Ctrl+Shift+j exec playerctl previous
+    bindsym Ctrl+Shift+k exec playerctl play-pause
+    bindsym Ctrl+Shift+l exec playerctl next
+    bindsym Ctrl+Shift+j exec playerctl previous
 
     # Mute/Unmute microphone
     bindsym $mod+m exec amixer set Capture toggle

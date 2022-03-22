@@ -1,13 +1,10 @@
 [global]
     # Make the width 3740 (3840 - 100), have 50 left margin and 95 above
-    geometry = "350x5-10+38"
     monitor = 0
     follow = keyboard
     indicate_hidden = yes
     shrink = yes
     transparency = 10
-    notification_height = 0
-    # Show multiple notifications in the same box
     separator_height = 2
     separator_color = frame
     sort = yes
@@ -27,9 +24,8 @@
     idle_threshold = 120
 
     # Font and typography settings
-    icon_path = /usr/share/icons/Papirus/48x48/status/:/usr/share/icons/Papirus/48x48/devices/:/usr/share/icons/Papirus/48x48/apps
-    font = Hermit 10
-    alignment = center
+    font = DejaVuSans 10
+    alignment = left
     show_age_threshold = 60
     ellipsize = middle
     ignore_newline = no
@@ -48,7 +44,6 @@
 
     title = Dunst
     class = Dunst
-    startup_notification = false
     force_xinerama = false
     word_wrap = yes
 
@@ -58,9 +53,6 @@
 
     # Allow some HTML tags like <i> and <u> in notifications
     markup = full
-
-# These are the keybindings used to control dunst notifications
-[shortcuts]
     close = ctrl+space
     close_all = ctrl+shift+space
     history = ctrl+grave
