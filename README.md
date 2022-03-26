@@ -1,4 +1,4 @@
-# My Arch Linux Dotfiles
+# My Arch Linux Dotfiles (HP Omen 15 2021)
 
 ### This repository is mainly used as a backup.
 
