@@ -10,6 +10,9 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $monitor_left HDMI-0
+set $monitor_main DP-2
+set $monitor_right DP-0
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -152,6 +155,10 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
+workspace $ws1 output $monitor_main
+workspace $ws4 output $monitor_left
+workspace $ws10 output $monitor_right
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
@@ -219,7 +226,10 @@ set $transparent #00000000
 exec_always --no-startup-id "clipster -d"
 
 # Run compositor
+
+# Fuck linux compositors, they use too much CPU and are buggy af
 exec_always --no-startup-id "picom"
+
 # Run notification server
 exec_always --no-startup-id "dunst"
 
