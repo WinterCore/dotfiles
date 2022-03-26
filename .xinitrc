@@ -1,10 +1,9 @@
 /usr/bin/prime-offload
 
+xrandr --output eDP-0 --mode 2560x1440 --scale 0.75x0.75 --rate 80
+
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f ~/.xprofile ] && . ~/.xprofile
-
-
-xrandr --output eDP-1 --mode 2560x1440 --scale 0.75x0.75 --rate 80
 
 xset r rate 250 40
 
