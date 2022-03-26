@@ -92,6 +92,8 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
 fi
 
+source /usr/share/nvm/init-nvm.sh
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -105,4 +107,10 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export EDITOR='nvim'
 alias vim=nvim
-source /usr/share/nvm/init-nvm.sh
+alias music=ncmpcpp
+
+alias cpuc="sudo cpupower frequency-set -g conservative"
+alias cpus="sudo cpupower frequency-set -g schedutil"
+alias cpup="sudo cpupower frequency-set -g performance"
+alias cpups="sudo cpupower frequency-set -g powersave"
+alias cpuinfo="cat /proc/cpuinfo | grep MHz"
