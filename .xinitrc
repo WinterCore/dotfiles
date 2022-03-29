@@ -1,6 +1,8 @@
- xrandr --setprovideroutputsource NVIDIA-G0 modesetting
-# xrandr --setprovideroutputsource modesetting NVIDIA-0
+
+xrandr --setprovideroutputsource NVIDIA-0 modesetting
 # xrandr --output eDP-1 --mode 2560x1440 --scale 0.75x0.75 --rate 80
+# xrandr --output eDP-1 --off
+# xrandr --auto
 
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f ~/.xprofile ] && . ~/.xprofile
