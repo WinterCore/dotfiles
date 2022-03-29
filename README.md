@@ -25,5 +25,14 @@
 
 ### External monitors setup
 
-Making the external monitors work with the Nvidia GPU was a pain.
-I ended up using [Optimus Manager](https://github.com/Askannz/optimus-manager) in Hybrid mode to be able to use the DPI & HDMI ports including the port provided by the USB-C port (which is connected to the integrated AMD GPU).
+~~Making the external monitors work with the Nvidia GPU was a pain.
+I ended up using [Optimus Manager](https://github.com/Askannz/optimus-manager) in Hybrid mode to be able to use the DPI & HDMI ports including the port provided by the USB-C port (which is connected to the integrated AMD GPU)~~
+
+Optimus Manager turned out to be a disaster, performance was shitty, and xorg was using way too much CPU.
+I ended up using `nvidia-xconfig --prime` to generate my xorg config file & xrandr's graphics display offloading
+
+Refs:
+- [https://download.nvidia.com/XFree86/Linux-x86_64/396.51/README/randr14.html](https://download.nvidia.com/XFree86/Linux-x86_64/396.51/README/randr14.html) 
+
+
+How to get Hardware Acceleration working in chromium based browsers [https://www.reddit.com/r/linux/comments/p2ivtq/updated_guide_on_how_to_get_hardware_acceleration/](https://www.reddit.com/r/linux/comments/p2ivtq/updated_guide_on_how_to_get_hardware_acceleration/)
