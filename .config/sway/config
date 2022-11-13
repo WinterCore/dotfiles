@@ -1,0 +1,263 @@
+
+set $mod Mod4
+
+# Monitor setup
+output eDP-1 scale 1.3 pos 0 0
+output HDMI-A-1 res 1920x1080
+# output DP-1 res 1920x1080@120Hz pos 3240 200
+
+# Key repeat rate
+input type:keyboard repeat_delay 250
+input type:keyboard repeat_rate 40
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec_always "/home/winter/.scripts/import-gsettings"
+exec "/home/winter/.scripts/battery-check"
+
+# exec wl-paste -t text --watch clipman store 1>> ~/.config/clipman/log 2>&1 &
+
+floating_modifier $mod
+
+set $lock "swaylock --image /home/winter/Pictures/lockscreen.jpeg"
+
+
+# Background
+output "*" bg /home/winter/Pictures/mountain-clouds-sky-scenery-digital-art-uhdpaper.com-4K-6.1266.jpeg fill
+
+# Status bar
+bar {
+    position top
+
+    font pango:Font Awesome 5 Free 8
+    font pango:Iosevka Bold 8
+    status_command while ~/.config/sway/status.sh; do sleep 2; done
+    status_padding 4
+
+    colors {
+    	background #14100100
+    }
+}
+
+
+# Touchpad
+
+input 1267:12643:ELAN260A:00_04F3:3163_Touchpad {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+}
+
+input 4817:4249:HUAWEI_Mouse_CD20_Mouse {
+    accel_profile flat
+    pointer_accel -0.35
+}
+
+input 1133:49278:Logitech_Gaming_Mouse_G402 {
+    accel_profile flat
+    pointer_accel -0.15
+}
+
+input type:keyboard {
+    xkb_layout "us,ara"
+    xkb_options "grp:alt_shift_toggle"
+}
+
+font pango:DejaVu Sans Mono 8
+
+
+default_border none
+
+# start a terminal
+bindsym $mod+Return exec alacritty
+
+# kill focused window
+bindsym $mod+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id dmenu-wl_run -i -b 
+bindsym $mod+e exec --no-startup-id thunar ~
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+bindsym Print exec "swayshot region"
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left 50 px
+bindsym $mod+Shift+j move down 50 px
+bindsym $mod+Shift+k move up 50 px
+bindsym $mod+Shift+l move right 50 px
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Clipboard
+bindsym $mod+period exec "clipman pick --tool rofi"
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+bindsym $mod+Shift+x exec $lock
+
+
+# Launch apps
+    # Web Browser
+    bindsym $mod+w exec google-chrome-stable
+    # htop in a floating terminal
+    bindsym $mod+i exec alacritty --class floating -e htop
+    # pavucontrol
+    bindsym $mod+p exec pavucontrol
+    # ncmpcpp in a floating terminal
+    bindsym $mod+n exec alacritty --class floating -e ncmpcpp
+    # lf in a floating terminal
+    bindsym $mod+z exec alacritty --class floating -e lf
+    # An empty floating terminal
+    bindsym $mod+Shift+Return exec alacritty --class floating
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Workspace Layouts
+# bindsym $mod+Ctrl+Shift+1 exec "default-layout"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 70 px or 5 ppt
+        bindsym j resize grow height 70 px or 5 ppt
+        bindsym k resize shrink height 70 px or 5 ppt
+        bindsym l resize grow width 70 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 7 px or 7 ppt
+        bindsym Down resize grow height 7 px or 7 ppt
+        bindsym Up resize shrink height 7 px or 7 ppt
+        bindsym Right resize grow width 7 px or 7 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Video wallpaper (requires xwinwrap and mplayer). It is executed twice because I have a 2 monitor setup
+# exec_always "xwinwrap -ov -ni -g 1920x1080+1920+0 -- mplayer -wid WID -quiet ~/Pictures/bg.mp4 -loop 0"
+# exec_always "xwinwrap -ov -ni -g 1920x1080 -- mplayer -wid WID -quiet ~/Pictures/bg.mp4 -loop 0"
+
+# Media & Volume
+    # Volume keys ("pulsemixer" is required)
+    bindsym $mod+bracketright exec pulsemixer --change-volume +5
+    bindsym $mod+bracketleft exec pulsemixer --change-volume -5
+
+    # Media keys ("playerctl" is required)
+    bindsym Ctrl+Shift+k exec playerctl play-pause
+    bindsym Ctrl+Shift+l exec playerctl next
+    bindsym Ctrl+Shift+j exec playerctl previous
+
+    # Mute/Unmute microphone
+    bindsym $mod+m exec amixer set Capture toggle
+
+    # MPC keys ("mpc" and "mpd" are required)
+    bindsym $mod+Ctrl+Shift+k exec mpc toggle
+    bindsym $mod+Ctrl+Shift+j exec mpc prev
+    bindsym $mod+Ctrl+Shift+l exec mpc next
+
+
+# Gaps
+hide_edge_borders both
+# Default pixel width
+for_window [class="^.*"] border pixel 1
+
+# Windows that should be floating by default
+for_window [class="zoom"] floating enable
+for_window [class="kruler"] floating enable
+for_window [class="feh"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="floating"] floating enable
+for_window [class="Alacritty" instance="floating"] floating enable
+for_window [class="Thunar"] floating enable
+
+gaps inner 10
+gaps outer 0
+
+#client.focused          #FF0000 #CC0B67 #80FFF9 #CC0B67
+client.focused          #515BA2 #515BA2 #00ff00 #515BA2
+client.unfocused          #515BA2 #3C3C3C #00ff00 #3C3C3C
+
+client.background       #000000

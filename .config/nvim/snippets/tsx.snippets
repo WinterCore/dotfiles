@@ -1,0 +1,27 @@
+snippet rfc "React.FC"
+interface I$0Props {
+    $1
+}
+
+const $0 = React.FC<I$0Props> = () => {
+    $2
+};
+endsnippet
+
+snippet useEffect "React.useEffect"
+React.useEffect(() => {
+	$0
+}, [$1]);
+endsnippet
+
+snippet useCallback "React.useCallback"
+React.useCallback(() => {
+    $0
+}, [$1]);
+endsnippet
+
+snippet useMemo "React.useMemo"
+React.useMemo(() => {
+    $0
+}, [$1]);
+endsnippet
