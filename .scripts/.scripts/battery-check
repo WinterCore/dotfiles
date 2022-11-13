@@ -1,0 +1,17 @@
+#/bin/sh
+
+while true
+do
+battery=`cat /sys/class/power_supply/BAT0/capacity`
+battery_percentage=`expr $battery + 0`
+status=`cat /sys/class/power_supply/BAT0/status`
+
+low_percentage=10
+
+if (( battery_percentage < low_percentage )) && [ "${status}" != "Charging" ];
+    then
+        notify-send -i /home/winter/.icons/Candy/devices/scalable/battery.svg -a Battery -u critical "Am I a joke to you?";
+fi
+
+sleep 120
+done

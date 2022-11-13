@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+const { execSync } = require("child_process");
+
+const cpu = execSync("sensors | grep Tctl");
+
+const regex = /\s\+(\d{2,3}\.\d+.C)\s/;
+
+let output = "";
+const cpuData = regex.exec(cpu.toString());
+if (cpuData)
+    output += `${cpuData[1]}`;
+process.stdout.write(output);

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mullvad-exclude sslocal -s 194.127.199.245 -p 443 -l 1080 -k mullvad -m chacha20-ietf-poly1305 -b 127.0.0.1 --fast-open --no-delay --plugin ss-v2ray-plugin --plugin-opts "mode=quic;host=$HOST"
