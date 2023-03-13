@@ -1,14 +1,20 @@
-
-xrandr --setprovideroutputsource NVIDIA-0 modesetting
-# xrandr --output eDP-1 --mode 2560x1440 --scale 0.75x0.75 --rate 80
-# xrandr --output eDP-1 --off
-# xrandr --auto
+/usr/bin/prime-offload
 
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f ~/.xprofile ] && . ~/.xprofile
 
-xset r rate 200 50
 
 xrdb /home/winter/.Xresources
 
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+ for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+  [ -x "$f" ] && . "$f"
+ done
+ unset f
+fi
+
+xset r rate 260 40
+
 exec i3
+
+/usr/bin/prime-switch

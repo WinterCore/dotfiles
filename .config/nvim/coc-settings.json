@@ -12,7 +12,5 @@
         "filetypes": ["haskell", "lhaskell"]
       }
     },
-    "tsserver": {
-        "formatOnType": true
-    }
+    "snippets.ultisnips.pythonPrompt": false
 }

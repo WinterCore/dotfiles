@@ -105,12 +105,32 @@ source /usr/share/nvm/init-nvm.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export EDITOR='nvim'
-alias vim=nvim
+export EDITOR="nvim"
+alias vim=neovide --multigrid
 alias music=ncmpcpp
+alias sudo="sudo "
+alias sn="WLR_DRM_DEVICES=/dev/dri/card0 sway-nvidia"
+
+# alias startx='startx; sudo /usr/bin/prime-switch'
+# alias s='startx; sudo /usr/bin/prime-switch'
 
 alias cpuc="sudo cpupower frequency-set -g conservative"
 alias cpus="sudo cpupower frequency-set -g schedutil"
 alias cpup="sudo cpupower frequency-set -g performance"
 alias cpups="sudo cpupower frequency-set -g powersave"
 alias cpuinfo="cat /proc/cpuinfo | grep MHz"
+alias suspend="i3lock -c 000000; systemctl suspend"
+alias s="gnome-shell --wayland"
+
+export PATH="$PATH:$HOME/.scripts"
+export PATH="$PATH:$HOME/.config/composer/vendor/bin:$HOME/.local/bin"
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+export PATH="$PATH:$HOME/.cargo/bin"
+
+# bun completions
+[ -s "/home/winter/.bun/_bun" ] && source "/home/winter/.bun/_bun"
+
+# pnpm
+export PNPM_HOME="/home/winter/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
