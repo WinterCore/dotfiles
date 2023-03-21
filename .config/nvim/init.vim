@@ -52,6 +52,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
     filetype plugin on
     syntax on
     colorscheme catppuccin
+    hi Normal guibg=NONE ctermbg=NONE
+    hi NonText guibg=NONE ctermbg=NONE
+    hi NormalNC guibg=NONE ctermbg=NONE
 
 " Buffers
     nnoremap <leader>b :Buffers<cr>
