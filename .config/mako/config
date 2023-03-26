@@ -1,0 +1,22 @@
+markup=1
+actions=1
+
+# Colors
+
+background-color=#ff0000
+text-color=#cdd6f4
+border-color=#89b4fa
+progress-color=over #313244
+
+# Format
+font=Roboto
+border-size=0
+format=%b
+padding=10
+default-timeout=7000
+# ignore-timeout=1
+# max-visible=5
+layer=overlay
+
+[urgency=high]
+border-color=#fab387
