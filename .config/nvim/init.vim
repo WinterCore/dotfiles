@@ -43,6 +43,10 @@ let g:coc_snippet_next = '<tab>'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 
+" Astro
+    let g:astro_typescript = 'enable'
+    let g:astro_stylus = 'enable'
+
 
 " Basics
     set number relativenumber
@@ -67,9 +71,20 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
     set wildmenu
 
+
+command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+
+" Execute shell command and pipe output into a new buffer
+    noremap <leader>ss Bs
+
+
 " Clipboard
     noremap <leader>y "+y
     noremap <leader>p "+p
+
+" Make
+    noremap <leader>md :make debug<cr>
+    noremap <leader>me :make exec<cr>
 
 " Terminal mode
     " tmap <C-h> <C-w>h
@@ -301,7 +316,7 @@ nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>sy  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -367,10 +382,12 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 if exists("g:neovide")
     set guifont=Fira\ Code:h11
-    let g:neovide_transparency = 0.65
-    let g:transparency = 0.95
+    let g:neovide_transparency = 0.92
+    let g:transparency = 1
 
     " let g:neovide_background_color = '#ffffff'.printf('%x', float2nr(255 * g:transparency))
+    let g:neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * g:transparency))
+
 
     let g:neovide_floating_blur_amount_x = 2.0
     let g:neovide_floating_blur_amount_y = 2.0
