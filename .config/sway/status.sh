@@ -17,8 +17,8 @@ total=$(echo $string | awk '{print $2}')
 memory_percentage=$(echo $used $total | awk '{ print $1/$2*100 }' | awk -F. '{ print $1 }')
 
 ram=" $memory_percentage%"
-mpd="MPD: $(mpc current)"
 
-volume=" $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))"
+volume=" $(awk '{ print $1 }' <(pulsemixer --get-volume))"
 
-echo "$temps   $ram   $brightness   $battery_status   $volume   $date_formatted"
+# echo "$temps   $ram   $brightness   $battery_status   $volume   $date_formatted"
+echo "$volume   $battery_status   $temps   $brightness   $ram   $date_formatted"
