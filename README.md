@@ -14,4 +14,4 @@
 | Application Launcher | [dmenu](https://wiki.archlinux.org/title/Dmenu)                             |
 
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.png?new)
