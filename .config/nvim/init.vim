@@ -10,6 +10,20 @@
 " Make cpaital y behave like capital d
 nnoremap Y y$
 
+
+
+lua << EOF
+    require("oil").setup({
+        view_options = {
+            show_hidden = false,
+        },
+        keymaps = {
+            ["g."] = "actions.toggle_hidden",
+        }
+    })
+    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+EOF
+
 " Coc Snippets
 imap <C-;> <Plug>(coc-snippets-expand)
 
@@ -65,6 +79,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " Run shortcuts
     noremap <space>rd :!deno run -A %<cr>
+    noremap <space>rr :!cargo run<cr>
 
 " Netrw
     let g:netrw_fastbrowse = 0
@@ -403,3 +418,8 @@ if exists("g:neovide")
     nnoremap <expr><C-=> ChangeScaleFactor(1.25)
     nnoremap <expr><C--> ChangeScaleFactor(1/1.25)
 endif
+
+
+
+" Disable autocomplete
+let b:coc_suggest_disable = 1

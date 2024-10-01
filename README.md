@@ -4,19 +4,14 @@
 
 | Type                 | Package                                                                     |
 |----------------------|-----------------------------------------------------------------------------|
-| Window Manager       | [Hyprland](https://github.com/hyprwm/Hyprland)                              |
+| Window Manager       | [i3](https://i3wm.org/)                                                     |
 | Terminal             | [Alacritty](https://wiki.archlinux.org/title/Alacritty)                     |
-| Notificaiton Server  | [Mako](https://github.com/emersion/mako)                                    |
-| Status bar           | [Waybar](https://github.com/Alexays/Waybar)                                 |
+| Notificaiton Server  | [Dunst](https://github.com/dunst-project/dunst)                             |
+| Status bar           | [Polybar](https://github.com/polybar/polybar)                               |
 | Shell                | [OhMyZsh](https://ohmyz.sh/) & [Pure](https://github.com/sindresorhus/pure) |
 | Editor               | [Neovim](https://neovim.io/)                                                |
-| Sound Server         | [PulseAudio](https://wiki.archlinux.org/title/PulseAudio)                   |
 | Music Player         | [mpd](https://wiki.archlinux.org/title/Music_Player_Daemon)                 |
-| Browser              | Chrome (firefox is so buggy)                                                |
-| Theme                | [Sweet Dark](https://www.gnome-look.org/p/1253385)                          |
-| Color scheme         | [Catppuccin Mocha](https://github.com/catppuccin/catppuccin)                |
+| Application Launcher | [dmenu](https://wiki.archlinux.org/title/Dmenu)                             |
 
-
-> Xorg absolutely sucks and whoever tells you otherwise has no idea what he's doing.
 
 ![Screenshot](screenshot.png)
