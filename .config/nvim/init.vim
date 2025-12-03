@@ -10,19 +10,93 @@
 " Make cpaital y behave like capital d
 nnoremap Y y$
 
-
-
 lua << EOF
+    require("CopilotChat").setup()
     require("oil").setup({
         view_options = {
             show_hidden = false,
         },
         keymaps = {
             ["g."] = "actions.toggle_hidden",
-        }
+            ["<CR>"] = "actions.select",
+        },
+        use_default_keymaps = false,
     })
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    require("claude-code").setup({
+      -- Terminal window settings
+      window = {
+        split_ratio = 0.3,      -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
+        position = "vertical",  -- Position of the window: "botright", "topleft", "vertical", "float", etc.
+        enter_insert = true,    -- Whether to enter insert mode when opening Claude Code
+        hide_numbers = true,    -- Hide line numbers in the terminal window
+        hide_signcolumn = true, -- Hide the sign column in the terminal window
+        
+        -- Floating window configuration (only applies when position = "float")
+        float = {
+          width = "80%",        -- Width: number of columns or percentage string
+          height = "80%",       -- Height: number of rows or percentage string
+          row = "center",       -- Row position: number, "center", or percentage string
+          col = "center",       -- Column position: number, "center", or percentage string
+          relative = "editor",  -- Relative to: "editor" or "cursor"
+          border = "rounded",   -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
+        },
+      },
+      -- File refresh settings
+      refresh = {
+        enable = true,           -- Enable file change detection
+        updatetime = 100,        -- updatetime when Claude Code is active (milliseconds)
+        timer_interval = 1000,   -- How often to check for file changes (milliseconds)
+        show_notifications = true, -- Show notification when files are reloaded
+      },
+      -- Git project settings
+      git = {
+        use_git_root = true,     -- Set CWD to git root when opening Claude Code (if in git project)
+      },
+      -- Shell-specific settings
+      shell = {
+        separator = '&&',        -- Command separator used in shell commands
+        pushd_cmd = 'pushd',     -- Command to push directory onto stack (e.g., 'pushd' for bash/zsh, 'enter' for nushell)
+        popd_cmd = 'popd',       -- Command to pop directory from stack (e.g., 'popd' for bash/zsh, 'exit' for nushell)
+      },
+      -- Command settings
+      command = "claude",        -- Command used to launch Claude Code
+      -- Command variants
+      command_variants = {
+        -- Conversation management
+        continue = "--continue", -- Resume the most recent conversation
+        resume = "--resume",     -- Display an interactive conversation picker
+
+        -- Output options
+        verbose = "--verbose",   -- Enable verbose logging with full turn-by-turn output
+      },
+      -- Keymaps
+      keymaps = {
+        toggle = {
+          normal = "<C-,>",       -- Normal mode keymap for toggling Claude Code, false to disable
+          terminal = "<C-,>",     -- Terminal mode keymap for toggling Claude Code, false to disable
+          variants = {
+            continue = "<leader>cC", -- Normal mode keymap for Claude Code with continue flag
+            verbose = "<leader>cV",  -- Normal mode keymap for Claude Code with verbose flag
+          },
+        },
+        window_navigation = true, -- Enable window navigation keymaps (<C-h/j/k/l>)
+        scrolling = true,         -- Enable scrolling keymaps (<C-f/b>) for page up/down
+      }
+    })
 EOF
+
+" Vibe coding
+nnoremap <leader>,c :CopilotChatOpen<CR>
+vmap <leader>,a <Plug>CopilotChatAddSelection
+nnoremap <leader>,l :ClaudeCode<CR>
+
+
+" Copilot
+imap <silent><script><expr> <M-a> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+imap <M-s> <Plug>(copilot-accept-line)
+
 
 " Coc Snippets
 imap <C-;> <Plug>(coc-snippets-expand)
@@ -176,15 +250,6 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
 set encoding=utf-8
@@ -267,6 +332,18 @@ augroup mygroup
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
+
+
+" Binary files
+    autocmd BufRead,BufNewFile *.bin,*.dat,*.raw setlocal binary nofixeol
+
+    " Convert buffer to hex (xxd)
+    nnoremap <leader>xh :%!xxd -g 1 -c 16 <CR>
+
+    " Convert hex back to binary
+    " nnoremap <leader>xb :%s/  .*$// \| :noh \| %!xxd -r -g 1 -c 32<CR>
+    nnoremap <leader>xb :%!xxd -r -g 1 -c 16<CR>
+
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
@@ -392,34 +469,6 @@ let g:fzf_colors =
 " - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
 "   'previous-history' instead of 'down' and 'up'.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-
-
-
-if exists("g:neovide")
-    set guifont=Fira\ Code:h11
-    let g:neovide_transparency = 0.92
-    let g:transparency = 1
-
-    " let g:neovide_background_color = '#ffffff'.printf('%x', float2nr(255 * g:transparency))
-    let g:neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * g:transparency))
-
-
-    let g:neovide_floating_blur_amount_x = 2.0
-    let g:neovide_floating_blur_amount_y = 2.0
-    let g:neovide_cursor_animation_length = 0.05
-    let g:neovide_cursor_trail_size = 0.05
-
-    let g:neovide_input_use_logo = v:true  " v:true on macOS
-    let g:neovide_scale_factor=1.0
-
-    function! ChangeScaleFactor(delta)
-      let g:neovide_scale_factor = g:neovide_scale_factor * a:delta
-    endfunction
-    nnoremap <expr><C-=> ChangeScaleFactor(1.25)
-    nnoremap <expr><C--> ChangeScaleFactor(1/1.25)
-endif
-
-
 
 " Disable autocomplete
 let b:coc_suggest_disable = 1

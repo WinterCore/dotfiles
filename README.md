@@ -1,17 +1,19 @@
-# My Arch Linux Dotfiles (HP Omen 15 2021)
+# My Arch Linux Dotfiles (Asus Zenbook S16)
+
+This laptop is a piece of shit and has been causing me issues in Linux since the day I bought it. Always research your hardware and make sure that all the components are supported before buying a new computer/laptop.
 
 ### This repository is mainly used as a backup.
 
 | Type                 | Package                                                                     |
 |----------------------|-----------------------------------------------------------------------------|
-| Window Manager       | [i3](https://i3wm.org/)                                                     |
+| Window Manager       | [Hyprland](https://hypr.land/)                                              |
 | Terminal             | [Alacritty](https://wiki.archlinux.org/title/Alacritty)                     |
-| Notificaiton Server  | [Dunst](https://github.com/dunst-project/dunst)                             |
-| Status bar           | [Polybar](https://github.com/polybar/polybar)                               |
+| Notificaiton Server  | [Mako](https://github.com/emersion/mako)                                    |
+| Status bar           | [Waybar](https://github.com/Alexays/Waybar)                                 |
 | Shell                | [OhMyZsh](https://ohmyz.sh/) & [Pure](https://github.com/sindresorhus/pure) |
 | Editor               | [Neovim](https://neovim.io/)                                                |
 | Music Player         | [mpd](https://wiki.archlinux.org/title/Music_Player_Daemon)                 |
-| Application Launcher | [dmenu](https://wiki.archlinux.org/title/Dmenu)                             |
+| Application Launcher | [Wofi](https://github.com/SimplyCEO/wofi)                                   |
 
 
-![Screenshot](screenshot.png?new)
+![Screenshot](screenshot.png?s16)

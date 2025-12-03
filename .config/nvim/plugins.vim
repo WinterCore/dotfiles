@@ -20,11 +20,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 " Plug 'vifm/vifm.vim'
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
-" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-
-" Svelte (temporary)
-Plug 'othree/html5.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'github/copilot.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim'
+Plug 'greggh/claude-code.nvim'
 call plug#end()
