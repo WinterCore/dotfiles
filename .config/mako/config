@@ -1,13 +1,21 @@
 # Colors
 
-background-color=#1a1b26
-text-color=#c0caf5
-border-color=#1a1b26
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#44542A
+border-size=2
+border-radius=0
 progress-color=over #313244
-format=<b>%a ⏵</b> %s\n%b
-sort=-time
-padding=10,10,10
+padding=10
+
 default-timeout=5000
 
+[urgency=low]
+default-timeout=2000
+
 [urgency=high]
+default-timeout=8000
 border-color=#fab387
+
+[urgency=critical]
+default-timeout=0

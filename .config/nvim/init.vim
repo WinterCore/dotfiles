@@ -84,6 +84,68 @@ lua << EOF
         scrolling = true,         -- Enable scrolling keymaps (<C-f/b>) for page up/down
       }
     })
+
+    -- Claude Code popup toggle
+    local claude_popup = {
+      buf = nil,
+      win = nil,
+    }
+
+    local function open_claude_popup()
+      -- If window exists and is valid, just focus it
+      if claude_popup.win and vim.api.nvim_win_is_valid(claude_popup.win) then
+        vim.api.nvim_set_current_win(claude_popup.win)
+        return
+      end
+
+      -- Find existing Claude Code buffer or create new one
+      if not claude_popup.buf or not vim.api.nvim_buf_is_valid(claude_popup.buf) then
+        -- Create a new buffer
+        claude_popup.buf = vim.api.nvim_create_buf(false, true)
+      end
+
+      -- Calculate window size (80% of editor)
+      local width = math.floor(vim.o.columns * 0.8)
+      local height = math.floor(vim.o.lines * 0.8)
+      local row = math.floor((vim.o.lines - height) / 2)
+      local col = math.floor((vim.o.columns - width) / 2)
+
+      -- Open floating window
+      claude_popup.win = vim.api.nvim_open_win(claude_popup.buf, true, {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = 'minimal',
+        border = 'rounded',
+      })
+
+      -- Start Claude Code in terminal if buffer is empty
+      if vim.api.nvim_buf_line_count(claude_popup.buf) == 1 
+         and vim.api.nvim_buf_get_lines(claude_popup.buf, 0, 1, false)[1] == '' then
+        vim.fn.termopen('claude')
+      end
+
+      -- Enter insert mode for terminal
+      vim.cmd('startinsert')
+    end
+
+    local function hide_claude_popup()
+      if claude_popup.win and vim.api.nvim_win_is_valid(claude_popup.win) then
+        vim.api.nvim_win_hide(claude_popup.win)
+      end
+    end
+
+    local function toggle_claude_popup()
+      if claude_popup.win and vim.api.nvim_win_is_valid(claude_popup.win) then
+        hide_claude_popup()
+      else
+        open_claude_popup()
+      end
+    end
+
+    vim.keymap.set('n', '<leader>d', toggle_claude_popup, { desc = 'Toggle Claude Code popup' })
 EOF
 
 " Vibe coding
