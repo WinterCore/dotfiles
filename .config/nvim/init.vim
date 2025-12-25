@@ -482,6 +482,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " FZF
 
 nmap <C-p> :Files<cr>
+" let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
 
 " Vifm
 nmap <C-n> :Vifm<cr>

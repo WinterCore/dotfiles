@@ -1,6 +1,4 @@
-# output eDP-1 scale 1.5
-
-exec_always killall kanshi; kanshi
+output eDP-1 scale 1.5
 
 bindswitch --reload --locked lid:on output eDP-1 disable
 bindswitch --reload --locked lid:off output eDP-1 enable
@@ -17,12 +15,14 @@ input type:touchpad {
     tap enabled
     dwt enabled
     scroll_factor 0.6
+    drag_lock disabled
 }
 
 input type:pointer {
     natural_scroll enabled
     tap enabled
     dwt enabled
+    drag_lock disabled
     scroll_factor 0.6
 }
 
@@ -60,7 +60,11 @@ exec_always {
 }
 
 
-exec_always killall waybar; waybar
+exec waybar
+exec kanshi
+
+# output eDP-1 enable mode 2880x1800@120.000Hz position 0,0 scale 1.5
+
 
 #
 # Example configuration:
@@ -127,6 +131,9 @@ exec swayidle -w \
     bindsym $mod+Ctrl+Shift+comma output eDP-1 disable
     bindsym $mod+Ctrl+Shift+period output eDP-1 enable
 
+    # Volume mixer
+    bindsym $mod+p exec pavucontrol
+
     # Browser
     bindsym $mod+w exec firefox
 
@@ -141,8 +148,9 @@ exec swayidle -w \
 
     bindsym $mod+Shift+x exec swaylock -f -c 000000
 
-    bindsym $mod+z exec grim -g "$(slurp)" - | swappy -f -
-    bindsym $mod+Shift+z exec grim -g "$(slurp)" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png && notify-send "Screenshot saved"
+    bindsym $mod+z exec grim -g "$(slurp)" - | wl-copy
+    bindsym $mod+Shift+z exec grim -g "$(slurp)" - | swappy -f -
+    bindsym $mod+Ctrl+Shift+z exec grim -g "$(slurp)" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png && notify-send "Screenshot saved"
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -287,5 +295,10 @@ gaps outer 5
 
 default_border pixel 2
 default_floating_border pixel 2
+
+for_window [app_id="firefox" title="Extension:.*Bitwarden"] floating enable
+for_window [app_id="firefox" window_type="dialog"] floating enable
+for_window [app_id="firefox" window_type="utility"] floating enable
+for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
 
 include /etc/sway/config.d/*

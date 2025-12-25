@@ -1,0 +1,19 @@
+profile laptop {
+    output eDP-1 enable mode 2880x1800@120.000Hz position 0,0 scale 1.5
+}
+
+# External monitor connected (laptop screen off)
+profile docked {
+    output eDP-1 enable mode 2880x1800@120.000Hz position 2560,0 scale 1.5
+    output HDMI-A-1 mode 2560x1440@120Hz position 0,0 scale 1
+}
+
+# Dual monitor setup (both screens)
+profile dual {
+    output eDP-1 enable mode 2880x1800@120.000Hz position 0,0 scale 1.5
+    output HDMI-A-1 enable mode 2560x1440@120Hz position 2880,0 scale 1
+}
+
+profile laptop-fallback {
+    output eDP-1 enable mode 2880x1800@120.000Hz position 0,0 scale 1.5
+}
