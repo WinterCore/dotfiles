@@ -1,0 +1,537 @@
+" Leader
+    let mapleader = " "
+
+" Includes
+    so ~/.config/nvim/plugins.vim
+
+" Tabs
+    set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+
+" Make cpaital y behave like capital d
+nnoremap Y y$
+
+lua << EOF
+    require("CopilotChat").setup()
+    require("oil").setup({
+        view_options = {
+            show_hidden = false,
+        },
+        keymaps = {
+            ["g."] = "actions.toggle_hidden",
+            ["<CR>"] = "actions.select",
+        },
+        use_default_keymaps = false,
+    })
+    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    require("claude-code").setup({
+      -- Terminal window settings
+      window = {
+        split_ratio = 0.3,      -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
+        position = "vertical",  -- Position of the window: "botright", "topleft", "vertical", "float", etc.
+        enter_insert = true,    -- Whether to enter insert mode when opening Claude Code
+        hide_numbers = true,    -- Hide line numbers in the terminal window
+        hide_signcolumn = true, -- Hide the sign column in the terminal window
+        
+        -- Floating window configuration (only applies when position = "float")
+        float = {
+          width = "80%",        -- Width: number of columns or percentage string
+          height = "80%",       -- Height: number of rows or percentage string
+          row = "center",       -- Row position: number, "center", or percentage string
+          col = "center",       -- Column position: number, "center", or percentage string
+          relative = "editor",  -- Relative to: "editor" or "cursor"
+          border = "rounded",   -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
+        },
+      },
+      -- File refresh settings
+      refresh = {
+        enable = true,           -- Enable file change detection
+        updatetime = 100,        -- updatetime when Claude Code is active (milliseconds)
+        timer_interval = 1000,   -- How often to check for file changes (milliseconds)
+        show_notifications = true, -- Show notification when files are reloaded
+      },
+      -- Git project settings
+      git = {
+        use_git_root = true,     -- Set CWD to git root when opening Claude Code (if in git project)
+      },
+      -- Shell-specific settings
+      shell = {
+        separator = '&&',        -- Command separator used in shell commands
+        pushd_cmd = 'pushd',     -- Command to push directory onto stack (e.g., 'pushd' for bash/zsh, 'enter' for nushell)
+        popd_cmd = 'popd',       -- Command to pop directory from stack (e.g., 'popd' for bash/zsh, 'exit' for nushell)
+      },
+      -- Command settings
+      command = "claude",        -- Command used to launch Claude Code
+      -- Command variants
+      command_variants = {
+        -- Conversation management
+        continue = "--continue", -- Resume the most recent conversation
+        resume = "--resume",     -- Display an interactive conversation picker
+
+        -- Output options
+        verbose = "--verbose",   -- Enable verbose logging with full turn-by-turn output
+      },
+      -- Keymaps
+      keymaps = {
+        toggle = {
+          normal = "<C-,>",       -- Normal mode keymap for toggling Claude Code, false to disable
+          terminal = "<C-,>",     -- Terminal mode keymap for toggling Claude Code, false to disable
+          variants = {
+            continue = "<leader>cC", -- Normal mode keymap for Claude Code with continue flag
+            verbose = "<leader>cV",  -- Normal mode keymap for Claude Code with verbose flag
+          },
+        },
+        window_navigation = true, -- Enable window navigation keymaps (<C-h/j/k/l>)
+        scrolling = true,         -- Enable scrolling keymaps (<C-f/b>) for page up/down
+      }
+    })
+
+    -- Claude Code popup toggle
+    local claude_popup = {
+      buf = nil,
+      win = nil,
+    }
+
+    local function open_claude_popup()
+      -- If window exists and is valid, just focus it
+      if claude_popup.win and vim.api.nvim_win_is_valid(claude_popup.win) then
+        vim.api.nvim_set_current_win(claude_popup.win)
+        return
+      end
+
+      -- Find existing Claude Code buffer or create new one
+      if not claude_popup.buf or not vim.api.nvim_buf_is_valid(claude_popup.buf) then
+        -- Create a new buffer
+        claude_popup.buf = vim.api.nvim_create_buf(false, true)
+      end
+
+      -- Calculate window size (80% of editor)
+      local width = math.floor(vim.o.columns * 0.8)
+      local height = math.floor(vim.o.lines * 0.8)
+      local row = math.floor((vim.o.lines - height) / 2)
+      local col = math.floor((vim.o.columns - width) / 2)
+
+      -- Open floating window
+      claude_popup.win = vim.api.nvim_open_win(claude_popup.buf, true, {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = 'minimal',
+        border = 'rounded',
+      })
+
+      -- Start Claude Code in terminal if buffer is empty
+      if vim.api.nvim_buf_line_count(claude_popup.buf) == 1 
+         and vim.api.nvim_buf_get_lines(claude_popup.buf, 0, 1, false)[1] == '' then
+        vim.fn.termopen('claude')
+      end
+
+      -- Enter insert mode for terminal
+      vim.cmd('startinsert')
+    end
+
+    local function hide_claude_popup()
+      if claude_popup.win and vim.api.nvim_win_is_valid(claude_popup.win) then
+        vim.api.nvim_win_hide(claude_popup.win)
+      end
+    end
+
+    local function toggle_claude_popup()
+      if claude_popup.win and vim.api.nvim_win_is_valid(claude_popup.win) then
+        hide_claude_popup()
+      else
+        open_claude_popup()
+      end
+    end
+
+    vim.keymap.set('n', '<leader>d', toggle_claude_popup, { desc = 'Toggle Claude Code popup' })
+EOF
+
+" Vibe coding
+nnoremap <leader>,c :CopilotChatOpen<CR>
+vmap <leader>,a <Plug>CopilotChatAddSelection
+nnoremap <leader>,l :ClaudeCode<CR>
+
+
+" Copilot
+imap <silent><script><expr> <M-a> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+imap <M-s> <Plug>(copilot-accept-line)
+
+
+" Coc Snippets
+imap <C-;> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+
+" Astro
+    let g:astro_typescript = 'enable'
+    let g:astro_stylus = 'enable'
+
+
+" Basics
+    set number relativenumber
+    set wildmode=longest,list,full
+    set encoding=utf-8
+    set nocompatible
+    filetype plugin on
+    syntax on
+    colorscheme catppuccin
+    hi Normal guibg=NONE ctermbg=NONE
+    hi NonText guibg=NONE ctermbg=NONE
+    hi NormalNC guibg=NONE ctermbg=NONE
+
+" Buffers
+    nnoremap <leader>b :Buffers<cr>
+
+" Run shortcuts
+    noremap <space>rd :!deno run -A %<cr>
+    noremap <space>rr :!cargo run<cr>
+
+" Netrw
+    let g:netrw_fastbrowse = 0
+
+    set wildmenu
+
+
+command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+
+" Execute shell command and pipe output into a new buffer
+    noremap <leader>ss Bs
+
+
+" Clipboard
+    noremap <leader>y "+y
+    noremap <leader>p "+p
+
+" Make
+    noremap <leader>md :make debug<cr>
+    noremap <leader>me :make exec<cr>
+
+" Terminal mode
+    " tmap <C-h> <C-w>h
+    " tmap <C-j> <C-w>j
+    " tmap <C-k> <C-w>k
+    " tmap <C-l> <C-w>l
+    tnoremap <Esc> <C-\><C-n>
+    autocmd BufWinEnter * setlocal modifiable
+
+" Splits open at the bottom and right, which is non-retarded, unlike vim defaults
+    set splitbelow splitright
+
+" Split navigation
+    map <C-h> <C-w>h
+    map <C-j> <C-w>j
+    map <C-k> <C-w>k
+    map <C-l> <C-w>l
+    " Split shortcuts
+        nmap <leader>G :sp<cr>
+        nmap <leader>g :vsp<cr>
+
+" Ack
+    set grepprg=ack
+    let g:grep_cmd_opts = '--noheading'
+
+
+" Search options
+    set hlsearch
+    set incsearch
+    nmap <leader><space> :noh<cr>
+
+" Fuzzy Finder
+    let g:ctrlp_custom_ignore = '*/node_modules/*|git'
+    let g:ctrlp_lazy_update = 1
+    let g:ctrlp_map = '<F10>'
+
+" Vim Airline
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline_powerline_fonts = 1
+
+" EasyAlign
+    " Start interactive EasyAlign in visual mode (e.g. vipga)
+        xmap ga <Plug>(EasyAlign)
+    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+        nmap ga <Plug>(EasyAlign)
+    " Align =
+        nmap <leader>aa= vip<Plug>(EasyAlign)*=<cr>
+
+" HaskellVim
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+set backspace=indent,eol,start
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" May need for vim (not neovim) since coc.nvim calculate byte offset by count
+" utf-8 byte sequence.
+set encoding=utf-8
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+
+" Binary files
+    autocmd BufRead,BufNewFile *.bin,*.dat,*.raw setlocal binary nofixeol
+
+    " Convert buffer to hex (xxd)
+    nnoremap <leader>xh :%!xxd -g 1 -c 16 <CR>
+
+    " Convert hex back to binary
+    " nnoremap <leader>xb :%s/  .*$// \| :noh \| %!xxd -r -g 1 -c 32<CR>
+    nnoremap <leader>xb :%!xxd -r -g 1 -c 16<CR>
+
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>sy  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+
+" FZF
+
+nmap <C-p> :Files<cr>
+" let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
+
+" Vifm
+nmap <C-n> :Vifm<cr>
+nmap <leader>- :Vifm<cr>
+
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - Popup window
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+" let g:fzf_layout = { 'down': '40%' }
+" let g:fzf_layout = { 'window': 'enew' }
+" let g:fzf_layout = { 'window': '-tabnew' }
+" let g:fzf_layout = { 'window': '10new' }
+
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" Disable autocomplete
+let b:coc_suggest_disable = 1
