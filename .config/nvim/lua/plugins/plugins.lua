@@ -59,7 +59,7 @@ return {
     'editorconfig/editorconfig-vim',
 
     -- GitHub Copilot
-    -- 'github/copilot.vim',
+    'github/copilot.vim',
 
     -- Claude Code integration
     'greggh/claude-code.nvim',

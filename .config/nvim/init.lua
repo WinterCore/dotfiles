@@ -439,3 +439,5 @@ vim.g.fzf_colors = {
 
 -- FZF history
 vim.g.fzf_history_dir = '~/.local/share/fzf-history'
+
+vim.env.FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'

@@ -1,4 +1,13 @@
 {
     "inlayHint.enable": false,
-    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/21.1.0/clangd_21.1.0/bin/clangd"
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/21.1.0/clangd_21.1.0/bin/clangd",
+    "tsserver.maxTsServerMemory": 8192,
+    "tsserver.watchOptions": {
+      "excludeDirectories": ["**/node_modules", "**/dist"]
+    },
+    "tsserver.experimental.enableProjectDiagnostics": false,
+    "typescript.preferGoToSourceDefinition": true,
+    "typescript.preferences.renameShorthandProperties": false,
+    "javascript.preferences.useAliasesForRenames": false,
+    "javascript.preferences.renameShorthandProperties": false
 }

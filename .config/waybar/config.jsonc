@@ -10,6 +10,8 @@
 	],
 
 	"modules-right": [
+        "custom/arrow9dot5",
+        "backlight",
 		"custom/arrow9",
 		"pulseaudio",
 		"custom/arrow8",
@@ -34,17 +36,23 @@
 	// Modules
 
 	"battery": {
-		"interval": 10,
-		"states": {
-			"warning": 30,
-			"critical": 15
-		},
-		"format-time": "{H}:{M:02}",
+		"interval": 3,
 		"format": "{icon}  {capacity}% ({time})",
+        "format-time": "{H}h{M}m",
+        "format-not-charging": "{icon}  FULL",
 		"format-charging": "  {capacity}% ({time})",
 		"format-charging-full": "  {capacity}%",
 		"format-full": "{icon}  {capacity}%",
 		"format-alt": "{icon}  {power}W",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "events": {
+            "on-discharging-warning": "notify-send -u normal 'Low Battery'",
+            "on-discharging-critical": "notify-send -u critical 'Very Low Battery'",
+            "on-charging-100": "notify-send -u normal 'Battery Full!'"
+        },
 		"format-icons": [
 			"",
 			"",
@@ -97,6 +105,7 @@
 	},
 
 	"network": {
+        "interface": "wlan0",
 		"interval": 5,
 		"format-wifi": "  {essid} ({signalStrength}%)",
 		"format-ethernet": "  {ifname}",
@@ -104,6 +113,14 @@
 		"format-alt": "\udb84\udc87  {ipaddr}/{cidr}",
 		"tooltip": false
 	},
+
+    "backlight": {
+        "format": "󰃟  {percent}%",
+        "scroll-step": 1,
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "tooltip": false
+    },
 
 	"sway/mode": {
 		"format": "{}",
@@ -126,7 +143,7 @@
 	"pulseaudio": {
 		"format": "{icon}  {volume}%",
 		"format-bluetooth": "{icon} {volume}%",
-		"format-muted": "",
+		"format-muted": "󰖁",
 		"format-icons": {
 			"headphone": "",
 			"hands-free": "",
@@ -134,7 +151,7 @@
 			"phone": "",
 			"portable": "",
 			"car": "",
-			"default": ["", ""]
+			"default": ["󰕾", "󰕾"]
 		},
 		"scroll-step": 1,
 		"on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
@@ -201,6 +218,11 @@
 	},
 
 	"custom/arrow9": {
+		"format": "",
+		"tooltip": false
+	},
+
+	"custom/arrow9dot5": {
 		"format": "",
 		"tooltip": false
 	},

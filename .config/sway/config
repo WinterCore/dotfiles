@@ -49,7 +49,7 @@ set $menu wmenu-run
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/winter/Pictures/wallpapers/street.jpg fill
+output * bg /home/winter/Pictures/wallpapers/wallhaven-wepyox_3840x2160.png fill
 
 set $gnome-schema org.gnome.desktop.interface
 
@@ -135,7 +135,7 @@ exec swayidle -w \
     bindsym $mod+p exec pavucontrol
 
     # Browser
-    bindsym $mod+w exec firefox
+    bindsym $mod+w exec google-chrome-stable
 
     # File manager
     bindsym $mod+e exec thunar
@@ -150,7 +150,8 @@ exec swayidle -w \
 
     bindsym $mod+z exec grim -g "$(slurp)" - | wl-copy
     bindsym $mod+Shift+z exec grim -g "$(slurp)" - | swappy -f -
-    bindsym $mod+Ctrl+Shift+z exec grim -g "$(slurp)" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png && notify-send "Screenshot saved"
+    bindsym $mod+Ctrl+Shift+z exec wayfreeze --after-freeze-cmd 'grim -g "$(slurp)" - | tee >(swappy -f -) | (cat > /dev/null; killall wayfreeze)'
+    # bindsym $mod+Ctrl+Shift+z exec grim -g "$(slurp)" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png && notify-send "Screenshot saved"
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -289,6 +290,11 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
     # Special key to take a screenshot with grim
     bindsym Print exec grim
+
+    # Scrolling cuz my mouse scroll wheel is broken
+    bindsym $mod+Next exec ydotool mousemove --wheel -- 0 5
+    bindsym $mod+Prior exec ydotool mousemove --wheel -- 0 -5
+
 
 gaps inner 10
 gaps outer 5

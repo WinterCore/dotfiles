@@ -37,6 +37,7 @@
 @define-color focused	@braqua;
 @define-color inactive	@purple;
 @define-color sound	@brpurple;
+@define-color backlight @brgray;
 @define-color network	@purple;
 @define-color memory	@braqua;
 @define-color cpu	@green;
@@ -163,6 +164,11 @@
 	color: @black;
 }
 
+#backlight {
+	background: @backlight;
+	color: @black;
+}
+
 #network {
 	background: @network;
 	color: @white;
@@ -258,6 +264,12 @@
 #custom-arrow9 {
 	font-size: 16pt;
 	color: @sound;
+	background: @backlight;
+}
+
+#custom-arrow9dot5 {
+	font-size: 16pt;
+	color: @backlight;
 	background: transparent;
 }
 
