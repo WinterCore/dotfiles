@@ -9,5 +9,5 @@
     "typescript.preferGoToSourceDefinition": true,
     "typescript.preferences.renameShorthandProperties": false,
     "javascript.preferences.useAliasesForRenames": false,
-    "javascript.preferences.renameShorthandProperties": false
+    "javascript.preferences.renameShorthandProperties": false,
 }
