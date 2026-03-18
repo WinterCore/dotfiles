@@ -440,4 +440,8 @@ vim.g.fzf_colors = {
 -- FZF history
 vim.g.fzf_history_dir = '~/.local/share/fzf-history'
 
-vim.env.FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
+-- Ag: run from git root so ag can find .gitignore
+vim.cmd([[
+  command! -bang -nargs=* Ag
+    \ call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0], 'options': '--delimiter : --nth 4..'}), <bang>0)
+]])
