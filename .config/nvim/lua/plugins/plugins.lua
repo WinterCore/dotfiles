@@ -36,9 +36,6 @@ return {
     -- Git integration
     'tpope/vim-fugitive',
 
-    -- VimWiki
-    'vimwiki/vimwiki',
-
     -- EasyAlign
     'junegunn/vim-easy-align',
 

@@ -171,14 +171,26 @@ vim.g.netrw_fastbrowse = 0
 
 vim.opt.wildmenu = true
 
--- Custom command for shell execution
-vim.api.nvim_create_user_command('R', function(opts)
-    vim.cmd('new')
-    vim.opt_local.buftype = 'nofile'
-    vim.opt_local.bufhidden = 'hide'
-    vim.opt_local.swapfile = false
-    vim.cmd('r !' .. opts.args)
-end, { nargs = '*', complete = 'shellcmd' })
+-- Async command runner: streams stdout/stderr into a terminal split (supports colors)
+local function run_in_split(vertical)
+    local cmd = vim.fn.input((vertical and 'vsplit' or 'split') .. ' $ ')
+    if cmd == '' then return end
+
+    vim.cmd(vertical and 'vnew' or 'new')
+    local buf = vim.api.nvim_get_current_buf()
+    vim.bo[buf].bufhidden = 'wipe'
+    vim.fn.termopen({'sh', '-c', cmd})
+    vim.cmd('startinsert')
+
+    vim.api.nvim_create_autocmd('TermClose', {
+        buffer = buf,
+        once = true,
+        callback = function() vim.cmd('stopinsert') end,
+    })
+end
+
+vim.keymap.set('n', '<leader>rh', function() run_in_split(false) end, { desc = 'Run command in horizontal split' })
+vim.keymap.set('n', '<leader>rv', function() run_in_split(true) end,  { desc = 'Run command in vertical split' })
 
 vim.keymap.set('n', '<leader>ss', 'Bs')
 
@@ -213,6 +225,15 @@ vim.keymap.set('n', '<C-l>', '<C-w>l')
 -- Split shortcuts
 vim.keymap.set('n', '<leader>G', ':sp<CR>')
 vim.keymap.set('n', '<leader>g', ':vsp<CR>')
+vim.keymap.set('n', '<leader>sh', '<C-w>J', { desc = 'Make split horizontal' })
+vim.keymap.set('n', '<leader>sv', '<C-w>L', { desc = 'Make split vertical' })
+vim.keymap.set('n', '<leader>st', function()
+    if vim.api.nvim_win_get_width(0) < vim.o.columns then
+        vim.cmd('wincmd J')
+    else
+        vim.cmd('wincmd L')
+    end
+end, { desc = 'Toggle split orientation' })
 
 -- Ack/Grep
 vim.opt.grepprg = 'ack'
